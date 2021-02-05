@@ -15,9 +15,15 @@
         "homepage": "https://github.com/cerbero90",
         "role": "Developer"
     }],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/DieZeeL/dto"
+        }
+    ],
     "require": {
         "php": "^7.3||^8.0",
-        "cerbero/dto": "^2.1",
+        "cerbero/dto": "dev-develop",
         "doctrine/dbal": "^2.12",
         "illuminate/console": "^5.6||^6.0||^7.0||^8.0",
         "illuminate/container": "^5.6||^6.0||^7.0||^8.0",
