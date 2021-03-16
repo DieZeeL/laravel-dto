@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Enumerable;
 use Illuminate\Support\Traits\Macroable;
 use JsonSerializable;
@@ -52,6 +53,23 @@ abstract class Dto extends BaseDto implements Arrayable, Jsonable
     public static function fromModel(Model $model, int $flags = NONE): self
     {
         return static::make($model->toArray(), $flags | CAST_PRIMITIVES | PARTIAL | IGNORE_UNKNOWN_PROPERTIES);
+    }
+
+    /**
+     * Retrieve an instance of DTO from the request
+     *
+     * @param Collection $collection
+     * @param int $flags
+     * @return Collection
+     */
+    public static function fromCollection(Collection $collection, int $flags = NONE): Collection
+    {
+        return $collection->map(function ($item, $key) use ($flags) {
+            if ($item instanceof Model) {
+                return static::fromModel($item, $flags);
+            }
+            return static::from($item, $flags);
+        });
     }
 
     /**
